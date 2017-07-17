@@ -1,0 +1,33 @@
+
+FUNCTION FC65 : VOID
+
+VAR_TEMP
+    // Temporary Variables
+CODE:INT;
+ptr:ANY;
+ptrD AT ptr :   STRUCT
+        S7ID:BYTE;
+        DATA_TYPE:BYTE;
+        DB_NUMBER:WORD;
+        MEMORY_AREA:BYTE;
+        BIT_ADRESS:BYTE;
+        BYTE_ADRESS:WORD;
+    END_STRUCT;
+
+DET:DATE_AND_TIME;
+END_VAR
+CODE:=READ_CLK(CDT :=DET  // OUT: DATE_AND_TIME
+             ); // INT
+ptrD.S7ID:=10;
+ptrD.DATA_TYPE:=B#16#05;
+ptrD.DB_NUMBER:=0;
+ptrD.MEMORY_AREA:=1;
+ptrD.BIT_ADRESS:=0;
+ptrD.BYTE_ADRESS:=0;   
+FB50.DB18(
+DATA:=ptr,
+     TIME_MARK:=DET
+     
+);
+END_FUNCTION
+
